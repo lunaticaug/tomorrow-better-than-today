@@ -1,0 +1,130 @@
+/* Anthropic/Claude Inspired Color Palette */
+
+:root {
+  /* Primary - Warm Orange/Terracotta */
+  --claude-orange: #CC5500;
+  --claude-orange-light: #E87A3A;
+  --claude-orange-dark: #A44200;
+
+  /* Background - Warm Beige/Cream */
+  --claude-bg-light: #FAF7F0;      /* 메인 배경 */
+  --claude-bg-cream: #F7F3E9;      /* Claude 채팅 배경 */
+  --claude-bg-sand: #F4EFE3;       /* 카드 배경 */
+
+  /* Text Colors */
+  --claude-text-primary: #2D2D2D;   /* 주요 텍스트 */
+  --claude-text-secondary: #6B6B6B; /* 보조 텍스트 */
+  --claude-text-muted: #989898;     /* 약한 텍스트 */
+
+  /* Accent Colors */
+  --claude-accent-purple: #7C3AED;  /* 보라색 포인트 */
+  --claude-accent-blue: #5B8DEE;    /* 파란색 링크 */
+  --claude-accent-green: #10B981;   /* 성공/확인 */
+
+  /* UI Elements */
+  --claude-border: #E5E5E5;         /* 테두리 */
+  --claude-border-light: #F0F0F0;   /* 연한 테두리 */
+  --claude-shadow: rgba(0, 0, 0, 0.05); /* 그림자 */
+
+  /* Code Block */
+  --claude-code-bg: #2D2D2D;        /* 코드 배경 (다크) */
+  --claude-code-text: #F7F3E9;      /* 코드 텍스트 */
+
+  /* Dark Mode */
+  --claude-dark-bg: #1A1A1A;        /* 다크모드 배경 */
+  --claude-dark-surface: #2D2D2D;   /* 다크모드 표면 */
+  --claude-dark-text: #F7F3E9;      /* 다크모드 텍스트 */
+}
+
+/* Typography (Anthropic uses clean, modern fonts) */
+:root {
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  --font-mono: "SF Mono", "Monaco", "Inconsolata", "Fira Code", monospace;
+
+  /* Font Sizes */
+  --text-xs: 0.75rem;    /* 12px */
+  --text-sm: 0.875rem;   /* 14px */
+  --text-base: 1rem;     /* 16px */
+  --text-lg: 1.125rem;   /* 18px */
+  --text-xl: 1.25rem;    /* 20px */
+  --text-2xl: 1.5rem;    /* 24px */
+  --text-3xl: 2rem;      /* 32px */
+
+  /* Font Weights */
+  --font-normal: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+
+  /* Border Radius (Anthropic uses soft, rounded corners) */
+  --radius-sm: 0.375rem;  /* 6px */
+  --radius-md: 0.5rem;    /* 8px */
+  --radius-lg: 0.75rem;   /* 12px */
+  --radius-xl: 1rem;      /* 16px */
+  --radius-full: 9999px;  /* 완전 둥근 */
+}
+
+/* Anthropic Design Characteristics */
+.anthropic-style {
+  /* Clean spacing */
+  --spacing-xs: 0.25rem;  /* 4px */
+  --spacing-sm: 0.5rem;   /* 8px */
+  --spacing-md: 1rem;     /* 16px */
+  --spacing-lg: 1.5rem;   /* 24px */
+  --spacing-xl: 2rem;     /* 32px */
+  --spacing-2xl: 3rem;    /* 48px */
+
+  /* Subtle shadows */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.08);
+
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-base: 250ms ease;
+  --transition-slow: 350ms ease;
+}
+
+/* Example Usage */
+.claude-button {
+  background: var(--claude-orange);
+  color: white;
+  padding: var(--spacing-sm) var(--spacing-lg);
+  border-radius: var(--radius-md);
+  font-weight: var(--font-medium);
+  transition: all var(--transition-base);
+  border: none;
+  cursor: pointer;
+}
+
+.claude-button:hover {
+  background: var(--claude-orange-dark);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.claude-card {
+  background: var(--claude-bg-sand);
+  border: 1px solid var(--claude-border-light);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.claude-message {
+  background: var(--claude-bg-cream);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+  position: relative;
+}
+
+/* Anthropic's signature orange accent line */
+.claude-accent-line {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--claude-orange);
+  border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+}

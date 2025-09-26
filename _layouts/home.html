@@ -1,0 +1,96 @@
+---
+layout: default
+---
+
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <h1 class="hero-title">{{ site.title }}</h1>
+        <p class="hero-subtitle">
+            {{ site.description }}
+        </p>
+        <div class="category-tabs">
+            <a href="#" class="category-tab active" data-category="all">All Posts</a>
+            <a href="#" class="category-tab" data-category="research">Research</a>
+            <a href="#" class="category-tab" data-category="safety">Safety</a>
+            <a href="#" class="category-tab" data-category="product">Product</a>
+            <a href="#" class="category-tab" data-category="company">Company</a>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Post -->
+{% assign featured_post = site.posts.first %}
+{% if featured_post %}
+<section class="featured-section">
+    <h2 class="section-title">Featured</h2>
+    <div class="featured-card">
+        <div class="featured-image">
+            {% if featured_post.image %}
+                <img src="{{ featured_post.image }}" alt="{{ featured_post.title }}">
+            {% endif %}
+        </div>
+        <div class="featured-content">
+            <div class="post-meta">
+                <span>{{ featured_post.category | default: "General" }}</span>
+                <span>•</span>
+                <span>{{ featured_post.date | date: "%b %-d, %Y" }}</span>
+                <span>•</span>
+                <span>{{ featured_post.content | reading_time }} min read</span>
+            </div>
+            <h3 class="featured-title">
+                {{ featured_post.title }}
+            </h3>
+            <p class="featured-excerpt">
+                {{ featured_post.excerpt | strip_html | truncatewords: 40 }}
+            </p>
+            <a href="{{ featured_post.url | relative_url }}" class="btn btn-primary">Read more</a>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Latest Posts Grid -->
+<section class="blog-section">
+    <h2 class="section-title">Latest Posts</h2>
+    <div class="blog-grid">
+        {% for post in site.posts offset:1 limit:6 %}
+        <article class="blog-card">
+            <div class="blog-card-image">
+                {% if post.image %}
+                    <img src="{{ post.image }}" alt="{{ post.title }}">
+                {% endif %}
+            </div>
+            <div class="blog-card-content">
+                <div class="post-meta">
+                    <span>{{ post.category | default: "General" }}</span>
+                    <span>•</span>
+                    <span>{{ post.date | date: "%b %-d, %Y" }}</span>
+                    <span>•</span>
+                    <span>{{ post.content | reading_time }} min read</span>
+                </div>
+                <h3 class="blog-card-title">
+                    <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+                </h3>
+                <p class="blog-card-excerpt">
+                    {{ post.excerpt | strip_html | truncatewords: 20 }}
+                </p>
+            </div>
+        </article>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- Newsletter Section -->
+<section class="newsletter-section">
+    <div class="container">
+        <h2 class="newsletter-title">Stay Updated</h2>
+        <p class="newsletter-subtitle">
+            Get the latest posts delivered to your inbox
+        </p>
+        <form class="newsletter-form" action="#" method="post">
+            <input type="email" class="newsletter-input" placeholder="Enter your email" required>
+            <button type="submit" class="btn btn-primary">Subscribe</button>
+        </form>
+    </div>
+</section>

@@ -214,3 +214,10 @@ _site/
 
 # Local setup documentation
 SETUP_GUIDE.md
+
+# Claude local configuration
+.claude.json
+.claude/
+
+# cc logs
+*_logs/
