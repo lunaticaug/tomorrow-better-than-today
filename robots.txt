@@ -1,0 +1,23 @@
+# Block all web crawlers from the entire site
+User-agent: *
+Disallow: /
+Crawl-delay: 86400
+
+# Block major search engines explicitly
+User-agent: Googlebot
+Disallow: /
+
+User-agent: Bingbot
+Disallow: /
+
+User-agent: Slurp
+Disallow: /
+
+User-agent: DuckDuckBot
+Disallow: /
+
+User-agent: Baiduspider
+Disallow: /
+
+User-agent: YandexBot
+Disallow: /

@@ -1,0 +1,23 @@
+---
+layout: home
+---
+
+<div class="home">
+  <h1>Tomorrow Better Than Today</h1>
+  <p>매일 조금씩 더 나은 내일을 만들어갑니다.</p>
+
+  <h2>Recent Posts</h2>
+  <ul class="post-list">
+    {% for post in site.posts limit:10 %}
+      <li>
+        <span class="post-meta">{{ post.date | date: "%Y-%m-%d" }}</span>
+        <h3>
+          <a class="post-link" href="{{ post.url | relative_url }}">
+            {{ post.title | escape }}
+          </a>
+        </h3>
+        <p>{{ post.excerpt | strip_html | truncatewords: 30 }}</p>
+      </li>
+    {% endfor %}
+  </ul>
+</div>
