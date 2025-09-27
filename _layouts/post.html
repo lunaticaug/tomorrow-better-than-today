@@ -1,0 +1,122 @@
+---
+layout: default
+---
+
+<article class="post-article">
+    <!-- Post Header -->
+    <header class="post-header">
+        <div class="post-header-content">
+            <div class="post-breadcrumb">
+                <a href="{{ '/' | relative_url }}">Home</a>
+                <span>/</span>
+                <a href="{{ '/#posts' | relative_url }}">Posts</a>
+                {% if page.category %}
+                <span>/</span>
+                <span>{{ page.category | capitalize }}</span>
+                {% endif %}
+            </div>
+
+            <h1 class="post-title">{{ page.title }}</h1>
+
+            <div class="post-meta-header">
+                <div class="post-author">
+                    <img src="{{ page.author_image | default: '/images/default-avatar.png' }}" alt="{{ page.author | default: site.author }}" class="author-avatar">
+                    <div class="author-info">
+                        <span class="author-name">{{ page.author | default: site.author }}</span>
+                        <div class="post-date-read">
+                            <time datetime="{{ page.date | date_to_xmlschema }}">
+                                {{ page.date | date: "%B %-d, %Y" }}
+                            </time>
+                            <span>•</span>
+                            <span class="reading-time">{{ content | reading_time }} min read</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            {% if page.excerpt %}
+            <p class="post-excerpt">{{ page.excerpt }}</p>
+            {% endif %}
+
+            {% if page.image %}
+            <div class="post-hero-image">
+                <img src="{{ page.image }}" alt="{{ page.title }}" loading="eager">
+            </div>
+            {% endif %}
+        </div>
+    </header>
+
+    <!-- Table of Contents (for long posts) -->
+    {% if page.toc %}
+    <nav class="post-toc">
+        <h2 class="toc-title">Table of Contents</h2>
+        <ul class="toc-list"></ul>
+    </nav>
+    {% endif %}
+
+    <!-- Post Content -->
+    <div class="post-content">
+        {{ content }}
+    </div>
+
+    <!-- Post Footer -->
+    <footer class="post-footer">
+        {% if page.tags %}
+        <div class="post-tags">
+            <h3 class="tags-title">Tags</h3>
+            <div class="tags-list">
+                {% for tag in page.tags %}
+                <a href="{{ '/tags/' | append: tag | relative_url }}" class="tag-link">#{{ tag }}</a>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+
+        <!-- Related Posts -->
+        <div class="related-posts">
+            <h3 class="related-title">You might also like</h3>
+            <div class="related-grid">
+                {% assign related_posts = site.related_posts | default: site.posts %}
+                {% for post in related_posts limit:3 %}
+                {% if post.url != page.url %}
+                <article class="related-card">
+                    {% if post.image %}
+                    <div class="related-image">
+                        <img src="{{ post.image }}" alt="{{ post.title }}">
+                    </div>
+                    {% endif %}
+                    <div class="related-content">
+                        <h4 class="related-post-title">
+                            <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+                        </h4>
+                        <time class="related-date">{{ post.date | date: "%B %-d, %Y" }}</time>
+                    </div>
+                </article>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <nav class="post-navigation">
+            {% if page.previous.url %}
+            <a href="{{ page.previous.url | relative_url }}" class="nav-prev">
+                <span class="nav-label">Previous</span>
+                <span class="nav-title">{{ page.previous.title | truncate: 40 }}</span>
+            </a>
+            {% endif %}
+
+            {% if page.next.url %}
+            <a href="{{ page.next.url | relative_url }}" class="nav-next">
+                <span class="nav-label">Next</span>
+                <span class="nav-title">{{ page.next.title | truncate: 40 }}</span>
+            </a>
+            {% endif %}
+        </nav>
+    </footer>
+</article>
+
+<!-- Post page scripts -->
+<script src="{{ '/assets/js/post.js' | relative_url }}"></script>

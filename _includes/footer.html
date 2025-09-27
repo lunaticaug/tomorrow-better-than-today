@@ -1,44 +1,16 @@
 <footer class="site-footer">
     <div class="footer-content">
-        <div class="footer-links">
-            <div class="footer-column">
-                <h4>Content</h4>
-                <ul>
-                    <li><a href="{{ '/posts' | relative_url }}">All Posts</a></li>
-                    <li><a href="{{ '/categories' | relative_url }}">Categories</a></li>
-                    <li><a href="{{ '/archives' | relative_url }}">Archives</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h4>About</h4>
-                <ul>
-                    <li><a href="{{ '/about' | relative_url }}">About Me</a></li>
-                    <li><a href="{{ '/projects' | relative_url }}">Projects</a></li>
-                    <li><a href="{{ '/contact' | relative_url }}">Contact</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h4>Resources</h4>
-                <ul>
-                    <li><a href="{{ '/feed.xml' | relative_url }}">RSS Feed</a></li>
-                    <li><a href="{{ '/sitemap.xml' | relative_url }}">Sitemap</a></li>
-                    <li><a href="#">Newsletter</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h4>Connect</h4>
-                <ul>
-                    <li><a href="https://github.com/{{ site.github_username }}" target="_blank">GitHub</a></li>
-                    <li><a href="https://twitter.com/{{ site.twitter_username }}" target="_blank">Twitter</a></li>
-                    <li><a href="https://linkedin.com/in/{{ site.linkedin_username }}" target="_blank">LinkedIn</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>© {{ 'now' | date: "%Y" }} {{ site.title }}. All rights reserved.</p>
-            <div class="footer-legal">
-                <a href="{{ '/privacy' | relative_url }}">Privacy</a>
-                <a href="{{ '/terms' | relative_url }}">Terms</a>
+        <div class="footer-simple" style="text-align: center; padding: 3rem 0;">
+            <p style="color: var(--secondary-text); margin-bottom: 1rem;">
+                © {{ 'now' | date: "%Y" }} {{ site.title }}
+            </p>
+            <div style="display: flex; gap: 2rem; justify-content: center; align-items: center;">
+                <a href="{{ '/' | relative_url }}" style="color: var(--secondary-text); text-decoration: none;">Home</a>
+                <a href="{{ '/archive/' | relative_url }}" style="color: var(--secondary-text); text-decoration: none;">Archive</a>
+                <a href="{{ '/about/' | relative_url }}" style="color: var(--secondary-text); text-decoration: none;">About</a>
+                {% if site.github_username %}
+                <a href="https://github.com/{{ site.github_username }}" target="_blank" rel="noopener" style="color: var(--secondary-text); text-decoration: none;">GitHub</a>
+                {% endif %}
             </div>
         </div>
     </div>
