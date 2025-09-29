@@ -1,0 +1,203 @@
+---
+layout: default
+title: Categories
+permalink: /categories/
+---
+
+<div class="page-header">
+    <h1 class="page-title">Categories</h1>
+    <p class="page-description">Explore content organized by topics</p>
+</div>
+
+<!-- Category Cloud -->
+<div class="category-cloud">
+    {% assign categories = site.categories | sort %}
+    {% for category in categories %}
+        {% assign category_name = category[0] %}
+        {% assign category_posts = category[1] %}
+        <a href="#{{ category_name | slugify }}" class="category-tag" data-count="{{ category_posts.size }}">
+            {{ category_name }}
+            <span class="count">{{ category_posts.size }}</span>
+        </a>
+    {% endfor %}
+</div>
+
+<!-- Category Posts -->
+<div class="categories-content">
+    {% for category in categories %}
+        {% assign category_name = category[0] %}
+        {% assign category_posts = category[1] %}
+
+        <section id="{{ category_name | slugify }}" class="category-section">
+            <h2 class="category-title">
+                {{ category_name | capitalize }}
+                <span class="post-count">{{ category_posts.size }} posts</span>
+            </h2>
+
+            <div class="category-posts">
+                {% for post in category_posts %}
+                <article class="post-item">
+                    <time class="post-date">{{ post.date | date: "%Y-%m-%d" }}</time>
+                    <h3 class="post-title">
+                        <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+                    </h3>
+                    {% if post.excerpt %}
+                    <p class="post-excerpt">{{ post.excerpt | strip_html | truncatewords: 20 }}</p>
+                    {% endif %}
+                </article>
+                {% endfor %}
+            </div>
+        </section>
+    {% endfor %}
+</div>
+
+<style>
+.page-header {
+    text-align: center;
+    padding: 4rem 0 3rem;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 3rem;
+}
+
+.page-title {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--primary-text);
+}
+
+.page-description {
+    color: var(--secondary-text);
+    font-size: 1.1rem;
+}
+
+.category-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 4rem;
+    padding: 2rem;
+    background: var(--card-bg);
+    border-radius: 12px;
+}
+
+.category-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    background: var(--bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 24px;
+    text-decoration: none;
+    color: var(--primary-text);
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+}
+
+.category-tag:hover {
+    background: var(--accent-color);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.category-tag .count {
+    background: var(--secondary-bg);
+    padding: 0.125rem 0.5rem;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    color: var(--secondary-text);
+}
+
+.category-tag:hover .count {
+    background: rgba(255,255,255,0.2);
+    color: white;
+}
+
+.category-section {
+    margin-bottom: 4rem;
+    scroll-margin-top: 100px;
+}
+
+.category-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--border-color);
+    margin-bottom: 2rem;
+}
+
+.post-count {
+    font-size: 0.9rem;
+    color: var(--secondary-text);
+    font-weight: normal;
+}
+
+.category-posts {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.post-item {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    background: var(--card-bg);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.post-item:hover {
+    transform: translateX(4px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.post-date {
+    color: var(--secondary-text);
+    font-size: 0.9rem;
+    font-family: 'SF Mono', Monaco, monospace;
+}
+
+.post-title {
+    margin: 0 0 0.5rem;
+    font-size: 1.25rem;
+}
+
+.post-title a {
+    color: var(--primary-text);
+    text-decoration: none;
+}
+
+.post-title a:hover {
+    color: var(--accent-color);
+}
+
+.post-excerpt {
+    color: var(--secondary-text);
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* Dark mode adjustments */
+[data-theme="dark"] .category-tag {
+    background: var(--secondary-bg);
+}
+
+[data-theme="dark"] .post-item {
+    background: var(--secondary-bg);
+}
+
+@media (max-width: 768px) {
+    .post-item {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
+
+    .category-cloud {
+        padding: 1rem;
+    }
+}
+</style>

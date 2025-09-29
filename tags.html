@@ -1,0 +1,426 @@
+---
+layout: default
+title: Tags
+permalink: /tags/
+---
+
+<div class="page-header">
+    <h1 class="page-title">Tags</h1>
+    <p class="page-description">Discover content through tags</p>
+</div>
+
+<!-- Tag Cloud Visualization -->
+<div class="tag-cloud-container">
+    <div class="tag-cloud">
+        {% assign tags = site.tags | sort %}
+        {% assign max_count = 0 %}
+        {% for tag in tags %}
+            {% if tag[1].size > max_count %}
+                {% assign max_count = tag[1].size %}
+            {% endif %}
+        {% endfor %}
+
+        {% for tag in tags %}
+            {% assign tag_name = tag[0] %}
+            {% assign tag_posts = tag[1] %}
+            {% assign tag_size = tag_posts.size | times: 100.0 | divided_by: max_count %}
+            {% assign font_size = tag_size | divided_by: 50.0 | plus: 0.8 %}
+
+            <a href="#{{ tag_name | slugify }}"
+               class="tag-cloud-item"
+               data-count="{{ tag_posts.size }}"
+               style="font-size: {{ font_size }}em; opacity: {{ tag_size | divided_by: 100.0 | plus: 0.4 }}">
+                #{{ tag_name }}
+            </a>
+        {% endfor %}
+    </div>
+
+    <div class="tag-stats">
+        <div class="stat-item">
+            <span class="stat-number">{{ site.tags.size }}</span>
+            <span class="stat-label">Total Tags</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-number">{{ site.posts.size }}</span>
+            <span class="stat-label">Tagged Posts</span>
+        </div>
+    </div>
+</div>
+
+<!-- Filter Bar -->
+<div class="filter-bar">
+    <input type="text" id="tag-search" placeholder="Search tags..." class="tag-search">
+    <div class="sort-options">
+        <button class="sort-btn active" data-sort="alpha">A-Z</button>
+        <button class="sort-btn" data-sort="count">Popular</button>
+        <button class="sort-btn" data-sort="recent">Recent</button>
+    </div>
+</div>
+
+<!-- Tags Grid -->
+<div class="tags-grid" id="tags-container">
+    {% for tag in tags %}
+        {% assign tag_name = tag[0] %}
+        {% assign tag_posts = tag[1] %}
+
+        <section class="tag-section" id="{{ tag_name | slugify }}" data-tag="{{ tag_name }}">
+            <div class="tag-header">
+                <h2 class="tag-title">
+                    <span class="tag-hash">#</span>{{ tag_name }}
+                </h2>
+                <span class="tag-count">{{ tag_posts.size }} posts</span>
+            </div>
+
+            <div class="tag-posts">
+                {% assign sorted_posts = tag_posts | sort: 'date' | reverse %}
+                {% for post in sorted_posts limit: 5 %}
+                <article class="tag-post-item">
+                    <time class="post-date">{{ post.date | date: "%Y-%m-%d" }}</time>
+                    <h3 class="post-title">
+                        <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+                    </h3>
+                </article>
+                {% endfor %}
+
+                {% if tag_posts.size > 5 %}
+                <a href="#" class="show-more" data-tag="{{ tag_name }}">
+                    Show {{ tag_posts.size | minus: 5 }} more...
+                </a>
+                {% endif %}
+            </div>
+        </section>
+    {% endfor %}
+</div>
+
+<style>
+.page-header {
+    text-align: center;
+    padding: 4rem 0 3rem;
+    margin-bottom: 3rem;
+}
+
+.page-title {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--primary-text);
+}
+
+.page-description {
+    color: var(--secondary-text);
+    font-size: 1.1rem;
+}
+
+.tag-cloud-container {
+    background: linear-gradient(135deg, var(--card-bg), var(--secondary-bg));
+    border-radius: 16px;
+    padding: 3rem;
+    margin-bottom: 3rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.tag-cloud-container::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, var(--accent-color) 0%, transparent 70%);
+    opacity: 0.03;
+    animation: rotate 60s linear infinite;
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.tag-cloud {
+    text-align: center;
+    line-height: 2.5;
+    padding: 2rem 0;
+    position: relative;
+    z-index: 1;
+}
+
+.tag-cloud-item {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    margin: 0.25rem;
+    color: var(--primary-text);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border-radius: 4px;
+    white-space: nowrap;
+}
+
+.tag-cloud-item:hover {
+    color: var(--accent-color);
+    transform: scale(1.1);
+    background: var(--bg-color);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.tag-stats {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    margin-top: 2rem;
+    position: relative;
+    z-index: 1;
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-number {
+    display: block;
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--accent-color);
+}
+
+.stat-label {
+    display: block;
+    font-size: 0.9rem;
+    color: var(--secondary-text);
+    margin-top: 0.25rem;
+}
+
+.filter-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background: var(--card-bg);
+    border-radius: 12px;
+}
+
+.tag-search {
+    flex: 1;
+    max-width: 300px;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background: var(--bg-color);
+    color: var(--primary-text);
+    font-size: 0.95rem;
+}
+
+.tag-search:focus {
+    outline: none;
+    border-color: var(--accent-color);
+}
+
+.sort-options {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.sort-btn {
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--border-color);
+    background: var(--bg-color);
+    color: var(--secondary-text);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.sort-btn.active,
+.sort-btn:hover {
+    background: var(--accent-color);
+    color: white;
+    border-color: var(--accent-color);
+}
+
+.tags-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 2rem;
+}
+
+.tag-section {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+    border: 1px solid var(--border-color);
+}
+
+.tag-section:hover {
+    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    transform: translateY(-2px);
+}
+
+.tag-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.tag-title {
+    font-size: 1.25rem;
+    color: var(--primary-text);
+    margin: 0;
+}
+
+.tag-hash {
+    color: var(--accent-color);
+    margin-right: 0.25rem;
+}
+
+.tag-count {
+    font-size: 0.85rem;
+    color: var(--secondary-text);
+    background: var(--secondary-bg);
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+}
+
+.tag-posts {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.tag-post-item {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    padding: 0.5rem 0;
+}
+
+.tag-post-item .post-date {
+    flex-shrink: 0;
+    font-size: 0.85rem;
+    color: var(--secondary-text);
+    font-family: 'SF Mono', Monaco, monospace;
+}
+
+.tag-post-item .post-title {
+    margin: 0;
+    font-size: 0.95rem;
+}
+
+.tag-post-item .post-title a {
+    color: var(--primary-text);
+    text-decoration: none;
+}
+
+.tag-post-item .post-title a:hover {
+    color: var(--accent-color);
+}
+
+.show-more {
+    display: inline-block;
+    margin-top: 0.5rem;
+    color: var(--accent-color);
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.show-more:hover {
+    text-decoration: underline;
+}
+
+/* Dark mode adjustments */
+[data-theme="dark"] .tag-cloud-container {
+    background: linear-gradient(135deg, var(--secondary-bg), var(--card-bg));
+}
+
+[data-theme="dark"] .tag-cloud-item:hover {
+    background: var(--secondary-bg);
+}
+
+@media (max-width: 768px) {
+    .tags-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .filter-bar {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .tag-search {
+        max-width: 100%;
+    }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('tag-search');
+    const tagsContainer = document.getElementById('tags-container');
+    const sortButtons = document.querySelectorAll('.sort-btn');
+    const tagSections = Array.from(document.querySelectorAll('.tag-section'));
+
+    // Search functionality
+    searchInput.addEventListener('input', function() {
+        const searchTerm = this.value.toLowerCase();
+
+        tagSections.forEach(section => {
+            const tagName = section.dataset.tag.toLowerCase();
+            if (tagName.includes(searchTerm)) {
+                section.style.display = 'block';
+            } else {
+                section.style.display = 'none';
+            }
+        });
+    });
+
+    // Sort functionality
+    sortButtons.forEach(btn => {
+        btn.addEventListener('click', function() {
+            sortButtons.forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+
+            const sortType = this.dataset.sort;
+            let sortedSections = [...tagSections];
+
+            switch(sortType) {
+                case 'alpha':
+                    sortedSections.sort((a, b) =>
+                        a.dataset.tag.localeCompare(b.dataset.tag)
+                    );
+                    break;
+                case 'count':
+                    sortedSections.sort((a, b) => {
+                        const aCount = parseInt(a.querySelector('.tag-count').textContent);
+                        const bCount = parseInt(b.querySelector('.tag-count').textContent);
+                        return bCount - aCount;
+                    });
+                    break;
+                case 'recent':
+                    sortedSections.sort((a, b) => {
+                        const aDate = a.querySelector('.post-date').textContent;
+                        const bDate = b.querySelector('.post-date').textContent;
+                        return bDate.localeCompare(aDate);
+                    });
+                    break;
+            }
+
+            tagsContainer.innerHTML = '';
+            sortedSections.forEach(section => {
+                tagsContainer.appendChild(section);
+            });
+        });
+    });
+
+    // Show more functionality
+    document.querySelectorAll('.show-more').forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            // This would expand to show all posts for this tag
+            alert('This would show all posts for #' + this.dataset.tag);
+        });
+    });
+});
+</script>

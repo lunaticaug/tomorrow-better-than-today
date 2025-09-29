@@ -1,0 +1,16 @@
+#!/bin/bash
+
+echo "Jekyll 서버 실행 방법:"
+echo ""
+echo "1. 일반 실행 (published posts만):"
+echo "   bundle exec jekyll serve"
+echo ""
+echo "2. Draft 포함 실행:"
+echo "   bundle exec jekyll serve --drafts"
+echo ""
+echo "3. 브라우저에서 확인:"
+echo "   http://localhost:4000"
+echo ""
+echo "4. 특정 포스트 확인:"
+echo "   http://localhost:4000/2024/12/27/test-post/"
+echo "   http://localhost:4000/2025/09/26/git-html-css-basics/"
