@@ -937,3 +937,28 @@ body {
     display: none;
   }
 }
+
+/* Posts Container - Unified padding for Recent and Latest posts */
+.posts-container {
+  padding: 4rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.posts-container .featured-section {
+  margin-bottom: 4rem;
+}
+
+.posts-container .blog-section {
+  margin-top: 0;
+}
+
+@media (max-width: 768px) {
+  .posts-container {
+    padding: 2rem 1rem;
+  }
+
+  .posts-container .featured-section {
+    margin-bottom: 2rem;
+  }
+}

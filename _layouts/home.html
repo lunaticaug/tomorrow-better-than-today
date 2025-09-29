@@ -19,59 +19,62 @@ layout: default
     </div>
 </section>
 
-<!-- Featured Post -->
-{% assign featured_post = site.posts.first %}
-{% if featured_post %}
-<section class="featured-section">
-    <h2 class="section-title">Recent Post</h2>
-    <div class="featured-card">
-        <div class="featured-content" style="max-width: 100%;">
-            <div class="post-meta">
-                <span>{{ featured_post.date | date: "%b %-d, %Y" }}</span>
-                {% if featured_post.category %}
-                <span>•</span>
-                <span>{{ featured_post.category }}</span>
-                {% endif %}
-            </div>
-            <h3 class="featured-title">
-                <a href="{{ featured_post.url | relative_url }}" style="color: inherit; text-decoration: none;">
-                    {{ featured_post.title }}
-                </a>
-            </h3>
-            <p class="featured-excerpt">
-                {{ featured_post.excerpt | strip_html | truncatewords: 25 }}
-            </p>
-            <a href="{{ featured_post.url | relative_url }}" class="read-more-link" style="color: var(--accent-color); text-decoration: none; font-weight: 500;">
-                Read more →
-            </a>
-        </div>
-    </div>
-</section>
-{% endif %}
-
-<!-- Latest Posts Grid -->
-<section class="blog-section" id="posts">
-    <h2 class="section-title">Latest Posts</h2>
-    <div class="blog-grid">
-        {% for post in site.posts offset:1 limit:6 %}
-        <article class="blog-card">
-            <div class="blog-card-content">
+<!-- Posts Container - Recent and Latest Posts in one section -->
+<div class="posts-container">
+    <!-- Featured Post -->
+    {% assign featured_post = site.posts.first %}
+    {% if featured_post %}
+    <section class="featured-section">
+        <h2 class="section-title">Recent Post</h2>
+        <div class="featured-card">
+            <div class="featured-content" style="max-width: 100%;">
                 <div class="post-meta">
-                    <span>{{ post.date | date: "%b %-d, %Y" }}</span>
-                    {% if post.category %}
+                    <span>{{ featured_post.date | date: "%b %-d, %Y" }}</span>
+                    {% if featured_post.category %}
                     <span>•</span>
-                    <span>{{ post.category }}</span>
+                    <span>{{ featured_post.category }}</span>
                     {% endif %}
                 </div>
-                <h3 class="blog-card-title">
-                    <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+                <h3 class="featured-title">
+                    <a href="{{ featured_post.url | relative_url }}" style="color: inherit; text-decoration: none;">
+                        {{ featured_post.title }}
+                    </a>
                 </h3>
-                <p class="blog-card-excerpt">
-                    {{ post.excerpt | strip_html | truncatewords: 15 }}
+                <p class="featured-excerpt">
+                    {{ featured_post.excerpt | strip_html | truncatewords: 25 }}
                 </p>
+                <a href="{{ featured_post.url | relative_url }}" class="read-more-link" style="color: var(--accent-color); text-decoration: none; font-weight: 500;">
+                    Read more →
+                </a>
             </div>
-        </article>
-        {% endfor %}
-    </div>
-</section>
+        </div>
+    </section>
+    {% endif %}
+
+    <!-- Latest Posts Grid -->
+    <section class="blog-section" id="posts">
+        <h2 class="section-title">Latest Posts</h2>
+        <div class="blog-grid">
+            {% for post in site.posts offset:1 limit:6 %}
+            <article class="blog-card">
+                <div class="blog-card-content">
+                    <div class="post-meta">
+                        <span>{{ post.date | date: "%b %-d, %Y" }}</span>
+                        {% if post.category %}
+                        <span>•</span>
+                        <span>{{ post.category }}</span>
+                        {% endif %}
+                    </div>
+                    <h3 class="blog-card-title">
+                        <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+                    </h3>
+                    <p class="blog-card-excerpt">
+                        {{ post.excerpt | strip_html | truncatewords: 15 }}
+                    </p>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+    </section>
+</div>
 
