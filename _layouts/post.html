@@ -18,6 +18,7 @@ layout: default
 
             <h1 class="post-title">{{ page.title }}</h1>
 
+            <!-- 작성자 정보 및 날짜 섹션 주석처리
             <div class="post-meta-header">
                 <div class="post-author">
                     <img src="{{ page.author_image | default: '/images/default-avatar.png' }}" alt="{{ page.author | default: site.author }}" class="author-avatar">
@@ -34,6 +35,7 @@ layout: default
                 </div>
 
             </div>
+            -->
 
             {% if page.excerpt %}
             <p class="post-excerpt">{{ page.excerpt }}</p>

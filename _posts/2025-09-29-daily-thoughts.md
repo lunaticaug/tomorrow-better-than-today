@@ -6,3 +6,8 @@ category: daily
 tags: []
 excerpt: ""
 ---
+
+
+# {date} 6일차: python 시작
+
+- 오늘은 파이썬 
